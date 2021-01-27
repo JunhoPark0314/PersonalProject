@@ -1,0 +1,12 @@
+[submodule "AdelaiDet"]
+	path = AdelaiDet
+	url = ./AdelaiDet
+[submodule "detectron2"]
+	path = detectron2
+	url = ./detectron2
+[submodule "fvcore"]
+	path = fvcore
+	url = ./fvcore
+[submodule "cocoapi"]
+	path = cocoapi
+	url = ./cocoapi
