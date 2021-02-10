@@ -13,7 +13,7 @@ GIT_FETCH(){
 }
 
 if [[ -z ${TORCH_VERSION} ]]; then
-	conda install pytorch torchvision torchaudio cudatoolkit=${CUDA_VERSION} -c pytorch
+	conda install pytorch torchvision torchaudio cudatoolkit=11.0 -c pytorch
 fi
 
 # setup fvcore
@@ -26,6 +26,11 @@ if [[ ! -e "fvcore" ]]; then
 	pip install -e fvcore
 fi
 
+if [[ ! -e "fvcore" ]]; then
+	git clone "${GIT}JunhoPark0314/fvcore.git"
+	$(GIT_FETCH "fvcore")
+	pip install -e fvcore
+fi
 
 if [[ ! -e "detectron2" ]]; then
 	git clone "${GIT}JunhoPark0314/detectron2.git"
@@ -33,11 +38,21 @@ if [[ ! -e "detectron2" ]]; then
 	pip install -e detectron2
 fi
 
+if [[ ! -e "PAA" ]]; then
+	git clone "${GIT}JunhoPark0314/PAA.git"
+	$(GIT_FETCH "PAA")
+	cd PAA
+	pip install -r requirements.txt
+	python setup.py build develop --no-deps
+	cd ${PROJECT_ROOT}
+fi
 
 if [[ ! -e "AdelaiDet" ]]; then
 	git clone "${GIT}JunhoPark0314/AdelaiDet.git"
 	$(GIT_FETCH "AdelaiDet")
 	pip install -e AdelaiDet
+	sudo apt-get install -y libgl1-mesa-glx libglib2.0-0
+	pip install sklearn
 fi
 
 
@@ -45,6 +60,7 @@ if [[ ! -e "cocoapi" ]]; then
 	git clone "${GIT}JunhoPark0314/cocoapi.git"
 	$(GIT_FETCH "cocoapi")
 	cd cocoapi/PythonAPI
+	pip install cython
 	make install
 	cd ${PROJECT_ROOT}
 fi

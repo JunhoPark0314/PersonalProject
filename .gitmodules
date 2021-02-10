@@ -10,3 +10,6 @@
 [submodule "cocoapi"]
 	path = cocoapi
 	url = ./cocoapi
+[submodule "PAA"]
+	path = PAA
+	url = https://github.com/JunhoPark0314/PAA.git
